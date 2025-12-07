@@ -1,0 +1,650 @@
+_____________________________________________________________________________________________
+testprog1
+_________
+
+# Testing string repeat operations 
+str = "Hello";	
+$x1 = 2.5; #numeric variable
+y_1 = 'Welcome!' .x. $x1;	#valid string repeat operation
+
+str_2 = $x1 .x. str ;
+println ("String Repeat Factor: ", str);
+println ("String Repeat Result: ", str_2);
+
+-------------------------------------------
+
+1. Line 6: Illegal operand type for the string repetition operation.
+2. Line 6: Missing Expression in Assignment Statement
+3. Line 6: Incorrect Assignment Statement.
+4. Line 6: Syntactic error in Program Body.
+5. Line 6: Missing Program
+
+Unsuccessful Interpretation
+Number of Errors 5
+
+
+
+
+
+
+_____________________________________________________________________________________________
+testprog2
+_________
+
+# Testing arithmetic operations  
+	
+$x1 = 3.5; #numeric variable
+y_1 = 'Welcome!';	#string variable
+num = "25.7";
+res_1 = $x1 * 4 + 8 / 5 ;
+
+res_2 = num / $x1 ;
+
+res_3 = y_1 - num;	
+println("res_3 = ", res_3);
+
+r_25 = 50.;
+
+--------------------------
+
+1. Line 10: Illegal opernad type for the operation.
+2. Line 10: Missing Expression in Assignment Statement
+3. Line 10: Incorrect Assignment Statement.
+4. Line 10: Syntactic error in Program Body.
+5. Line 10: Missing Program
+
+Unsuccessful Interpretation
+Number of Errors 5
+
+
+
+
+
+
+
+_____________________________________________________________________________________________
+testprog3
+_________
+
+# Testing run-time error: division by zero  
+	
+$x1 = 0; #numeric variable
+y_1 = 'Welcome!';	#string variable
+num = "25.7";
+
+res_2 = num / $x1 ;
+println("res_2 = ", res_2);
+
+---------------------------
+
+1. Line 7: Illegal operand type or value for the division operation.
+2. Line 7: Missing Expression in Assignment Statement
+3. Line 7: Incorrect Assignment Statement.
+4. Line 7: Syntactic error in Program Body.
+5. Line 7: Missing Program
+
+Unsuccessful Interpretation
+Number of Errors 5
+
+
+
+
+
+
+
+_____________________________________________________________________________________________
+testprog4
+_________
+
+# Illegal operand type for sign operation 
+	
+$x1 = 0; #numeric variable
+
+num = -"25.7";
+y_1 = 'Welcome!';	#string variable
+
+println("num = ", res_2, " ", !y_1);
+
+--------------------------------
+
+1. Line 5: Illegal Operand Type for Sign Operator
+2. Line 5: Missing operand for an operator
+3. Line 5: Missing Expression in Assignment Statement
+4. Line 5: Incorrect Assignment Statement.
+5. Line 5: Syntactic error in Program Body.
+6. Line 5: Missing Program
+
+Unsuccessful Interpretation
+Number of Errors 6
+
+
+
+
+
+
+_____________________________________________________________________________________________
+testprog5
+_________
+
+#Testing illegal exponentiation operation
+	$r = "2";
+	x = 5.0;
+	
+	y_1 = x ** $r ** 2 ** 2;
+	println("Value of y_1 = ", y_1);
+
+-----------------------------------
+
+1. Line 5: Illegal exponentiation operation.
+2. Line 5: Missing exponent operand after exponentiation
+3. Line 5: Missing operand for an operator
+4. Line 5: Missing Expression in Assignment Statement
+5. Line 5: Incorrect Assignment Statement.
+6. Line 5: Syntactic error in Program Body.
+7. Line 5: Missing Program
+
+Unsuccessful Interpretation
+Number of Errors 7
+
+
+
+
+
+
+_____________________________________________________________________________________________
+testprog6
+_________
+
+# Illegal assignment of a boolean value to a variable 
+	
+$x1 = 0; #numeric variable
+
+num = "25.7";
+y_1 = !'Welcome!';	#string variable
+
+println("num = ", num, ", ", !y_1);
+
+-----------------------------------------
+
+1. Line 6: Illegal Assignment of a boolean value to a variable.
+2. Line 6: Incorrect Assignment Statement.
+3. Line 6: Syntactic error in Program Body.
+4. Line 6: Missing Program
+
+Unsuccessful Interpretation
+Number of Errors 4
+
+
+
+
+
+_____________________________________________________________________________________________
+testprog7
+_________
+
+# Testing remainder (%) operation  
+	
+$x1 = 3.5; #numeric variable
+y_1 = 'Welcome!';	#string variable
+num = "25.7";
+res_1 = num % $x1 ;
+println("res_1 = ", res_1);
+num = 47;
+res_2 = num % $x1 ;
+println("res_2 = ", res_2);
+res_3 = y_1 % num;	
+println("res_3 = ", res_3);
+
+r_25 = 50.;
+
+-------------------------------------
+
+res_1 = 25.0
+res_2 = 2.0
+1. Line 11: Illegal operand type for the operation.
+2. Line 11: Missing Expression in Assignment Statement
+3. Line 11: Incorrect Assignment Statement.
+4. Line 11: Syntactic error in Program Body.
+5. Line 11: Missing Program
+
+Unsuccessful Interpretation
+Number of Errors 5
+
+
+
+
+
+
+_____________________________________________________________________________________________
+testprog8
+_________
+
+#Testing numeric relational operator with Boolean Operand
+	$r = 50;
+	flag = "true";
+	if (($r && flag) < 20 ) 
+	{
+		$y_1 = 5;
+		$r += 20;
+	}
+	else {
+		$y_1 = (7.5);
+		$r -= 20;
+	}
+	println ('Value = ', $r, '$y_1 = ', flag);
+	$r = $r . flag;
+
+
+-----------------------------------
+
+1. Line 4: Illegal Relational operation.
+2. Line 4: Missing if statement Logic Expression
+3. Line 4: Incorrect If-Statement.
+4. Line 4: Syntactic error in Program Body.
+5. Line 4: Missing Program
+
+Unsuccessful Interpretation
+Number of Errors 5
+
+
+
+
+
+
+_____________________________________________________________________________________________
+testprog9
+_________
+
+#Testing string relational operator with Boolean operand
+	$r = 0;
+	$x = 6;
+	$y = -8 * $x;
+	flag = 'true';
+	if (flag @gt ($x && $r)) {
+		$y_1 = -5;
+		flag = 'hello' . $y_1 * 4;
+	}
+	else {
+		$y_1 = -!(7.5);
+		flag = 'goodbye';
+	};
+	$res = ($r * ($y + $x ** 2)) / $y - $x;
+	println ('$res = ', $res, ", ", '$y_1 = ', $y_1, ", ", 'flag = "', flag, '"');
+
+----------------------------------------------
+
+1. Line 6: Illegal Relational operation.
+2. Line 6: Missing if statement Logic Expression
+3. Line 6: Incorrect If-Statement.
+4. Line 6: Syntactic error in Program Body.
+5. Line 6: Missing Program
+
+Unsuccessful Interpretation
+Number of Errors 5
+
+
+
+
+
+
+_____________________________________________________________________________________________
+testprog10
+__________
+
+# Clean Program
+#Testing if statement string condition and combined assignments
+	$r = 50;
+	flag = "true";
+	if (flag) 
+	{
+		$y_1 = 5;
+		$r += 20;
+	};
+	
+	$y_1 += (7.5);
+	$r -= 20;
+	flag .= $y_1;
+	
+	println ('$r = ', $r, ", ", '$y_1 = ', $y_1, ", ", 'flag = "', flag, '"');
+
+--------------------------------------------------------
+
+$r = 50.0, $y_1 = 12.5, flag = "true12.5"
+
+
+DONE
+
+Successful Execution
+
+
+
+
+
+
+
+
+_____________________________________________________________________________________________
+testprog11
+__________
+
+# Clean Program
+#Testing if statement else-clause
+	$r = 50;
+	flag = "true";
+	if ($r < 50 ) 
+	{
+		$y_1 = 5;
+		$r += 20;
+	}
+	else {
+		$y_1 = (7.5);
+		$r -= 20;
+		flag = $r . flag;
+	};
+	println ('$r = ', $r, ", ", '$y_1 = ', $y_1, ", ", 'flag = "', flag, '"');
+
+------------------------------------------------------
+
+$r = 30.0, $y_1 = 7.5, flag = "30true"
+
+
+DONE
+
+Successful Execution
+
+
+
+
+
+
+
+_____________________________________________________________________________________________
+testprog12
+__________
+
+# Clean Program
+#Testing if statement if-then-clause
+	$r = 50;
+	flag = "true";
+	if ($r >= 40 ) 
+	{
+		$y_1 = 5;
+		$r += 20;
+	}
+	else {
+		$y_1 = (7.5);
+		$r -= 20;
+		flag = $r . flag;
+	};
+	println ('$r = ', $r, ", ", '$y_1 = ', $y_1, ", ", 'flag = "', flag, '"');
+
+-----------------------------------------------
+
+$r = 70.0, $y_1 = 5.0, flag = "true"
+
+
+DONE
+
+Successful Execution
+
+
+
+
+
+
+
+_____________________________________________________________________________________________
+testprog13
+__________
+
+# Clean Program 
+#Testing string repeat operations 
+
+str = "Hello";	
+$x1 = 2.5; #numeric variable
+y_1 = 'Welcome!' .x. $x1;	#valid string repeat operation
+println ("String Repeat Factor: ", $x1);
+println ("String Repeat Result: ", y_1);
+str_1 = $x1 .x. 3;
+println ("String Repeat Factor: ", 3);
+println ("String Repeat Result: ", str_1);
+
+----------------------------------------------------
+
+String Repeat Factor: 2.5
+String Repeat Result: Welcome!Welcome!
+String Repeat Factor: 3.0
+String Repeat Result: 2.52.52.5
+
+
+DONE
+
+Successful Execution
+
+
+
+
+
+
+_____________________________________________________________________________________________
+testprog14
+__________
+# Clean Program
+#Testing NOT operation 
+	
+$x1 = 0; #numeric variable
+
+num = "25.7";
+y_1 = 'Welcome!';	#string variable
+
+println("y_1 = ", y_1);
+println("!y_1 = ", !y_1);
+
+-------------------------------------------------------
+
+y_1 = Welcome!
+!y_1 = false
+
+
+DONE
+
+Successful Execution
+
+
+
+
+
+
+
+
+_____________________________________________________________________________________________
+testprog15
+__________
+
+# Clean Program
+#Testing exponentiation
+	$r = 2;
+	x = 4;
+	
+	y_1 = x ** $r ** 2 ** 2;
+	println("Value of y_1 = ", y_1);
+
+---------------------------------------------------
+
+Value of y_1 = 4294967296.0
+
+
+DONE
+
+Successful Execution
+
+
+
+
+
+
+
+_____________________________________________________________________________________________
+testprog16
+__________
+
+# Testing mixed-mode expressions
+	$r = 50;
+	$x = 6;
+	$y = -8 * $x;
+	flag = 'true';
+	if (flag && $x == 6) {
+		$y_1 = -5;
+		flag = 'hello' . $y_1 * 4;
+	}
+	else {
+		$y_1 = -!(7.5);
+		flag = 'goodbye';
+	};
+	$res = ($r * ($y + $x ** 2)) / $y - $x;
+	println ('$res = ', $res, ", ", '$y_1 = ', $y_1, ", ", 'flag = "', flag, '"');
+
+----------------------------------------------
+
+$res = 6.5, $y_1 = -5.0, flag = "hello-20"
+
+
+DONE
+
+Successful Execution
+
+
+
+
+
+
+
+_____________________________________________________________________________________________
+testprog17
+__________
+
+#Clean program 1 with nested if statements
+	size = 50;
+	$z = 6;
+	$w = -8 * size;
+	word1 = 'good';
+	word2 = "pass";
+	if (word2 @gt word1) {
+		if($z < 8)
+		{
+			if($w < 0 && word1)
+			{
+				ind = 'hello';
+				$z = $z + 1;
+			}
+		}
+		else
+		{
+			ind = 'goodbye';
+			$z = $z - 1;
+		};
+	}
+	else {
+		$z = (7.5);
+		ind = 'goodbye';
+		
+	};
+	println ('$z = ', $z, ", ", 'ind = ', ind);
+
+-----------------------------------------------
+
+$z = 7.0, ind = hello
+
+
+DONE
+
+Successful Execution
+
+
+
+
+
+
+
+_____________________________________________________________________________________________
+testprog18
+__________
+
+#Clean program 2 with nested if statements
+	size = 50;
+	$z = 6;
+	$w = -8 * size;
+	word1 = 'good';
+	word2 = "pass";
+	if (word1 @le word2 || $w >= 0) {
+		if($z >= 8)
+		{
+			ind = 'hello';
+			$z = $z + 1;
+		}
+		else
+		{
+			ind = 'goodbye';
+			$z = $z - 1;
+		};
+	}
+	else {
+		$z = (7.5);
+		ind = 'goodbye';
+		
+	};
+	println ('$z = ', $z, ", ", 'ind = ', ind);
+
+---------------------------------------
+
+$z = 5.0, ind = goodbye
+
+
+DONE
+
+Successful Execution
+
+
+
+
+
+
+_____________________________________________________________________________________________
+testprog19
+__________
+
+#Clean program 3 with nested if statements
+	size = 50;
+	$z = 6;
+	$w = -8 * size;
+	word1 = "";
+	word2 = "pass";
+	if (word1 && word2) {
+		$z = (7.5);
+		ind = 'goodbye';
+	}
+	else {
+		if($z >= 8)
+		{
+			ind = 'hello';
+			$z = $z + 1;
+		}
+		else
+		{
+			ind = 'Welcome';
+			println("$w = ", $w);
+		};
+	};
+	println ('$z = ', $z, ", ", 'ind = ', ind);
+
+--------------------------------------------
+
+$w = -400.0
+$z = 6.0, ind = Welcome
+
+
+DONE
+
+Successful Execution
+
+
