@@ -1,9 +1,7 @@
 // Connor Melton CS280 Programming Assignment 3
-
-#include "parserInt.h"
-
 #include <iterator>
 
+#include "parserInt.h"
 using namespace std;
 
 map<string, bool> defVar;
@@ -11,19 +9,14 @@ map<string, Token> SymTable;
 
 // Flag for some older paths (still used for non-IF structural cascades)
 static bool needProgBodyError = false;
-
 // Line number of the current statement's first token
 static int currentStmtLine = -1;
-
 // Track whether we are parsing inside an ELSE clause's StmtList
 static bool inElseClause = false;
-
 // Track whether we are parsing inside the IF body StmtList
 static bool inIfBody = false;
-
 // Track special exponentiation error cascade for testprog15
 static bool inExpErrorCascade = false;
-
 // For ELSE StmtList: did we already emit the "Missing Statement for
 // Else-Clause" cascade
 static bool elseStmtListAlreadyReported = false;
@@ -46,6 +39,33 @@ constexpr const char* MISSING_ASSIGN = "Missing Assignment Operator";
 constexpr const char* MISSING_SEMI = "Missing semicolon at end of Statement";
 }  // namespace ErrMsg
 
+map<string, Value>
+    TempsResults;      // Container of temporary locations of Value objects for
+                       // results of expressions, variables values and constants
+queue<Value>* ValQue;  // declare a pointer variable to a queue of Value objects
+
+namespace Parser {
+bool pushed_back = false;
+LexItem pushed_token;
+
+static LexItem GetNextToken(istream& in, int& line) {
+  if (pushed_back) {
+    pushed_back = false;
+    return pushed_token;
+  }
+  return getNextToken(in, line);
+}
+
+static void PushBackToken(LexItem& t) {
+  if (pushed_back) {
+    abort();
+  }
+  pushed_back = true;
+  pushed_token = t;
+}
+
+}  // namespace Parser
+
 // Forward for error reporting (defined at bottom)
 void ParseError(int line, std::string msg);
 
@@ -54,30 +74,6 @@ void ParseError(int line, std::string msg);
 static inline int ErrLine(int line) {
   return (currentStmtLine != -1 ? currentStmtLine : line);
 }
-
-// -----------------------------------------------------------------------------
-// Token lookahead helpers live in namespace Parser
-// -----------------------------------------------------------------------------
-namespace Parser {
-
-bool pushed_back = false;
-LexItem pushed_token;
-
-LexItem GetNextToken(istream& in, int& line) {
-  if (pushed_back) {
-    pushed_back = false;
-    return pushed_token;
-  }
-  return getNextToken(in, line);
-}
-
-void PushBackToken(LexItem& t) {
-  if (pushed_back) abort();
-  pushed_token = t;
-  pushed_back = true;
-}
-
-}  // namespace Parser
 
 // Make helper names visible in global parser functions
 using Parser::GetNextToken;
@@ -103,26 +99,23 @@ static void successMsgBuilder() {
 enum StmtKind { STMT_NONE, STMT_ASSIGN, STMT_IF, STMT_PRINTLN };
 static StmtKind lastStmtKind = STMT_NONE;
 
-// Forward declarations (otherwise circular dependency problem w recursive
-// calls)
+// Forward declarations
 bool StmtList(istream& in, int& line);
 bool Stmt(istream& in, int& line);
 bool IfStmt(istream& in, int& line);
 bool PrintLnStmt(istream& in, int& line);
 bool AssignStmt(istream& in, int& line);
-
-// Also used across functions
 bool ExprList(istream& in, int& line);
-bool Expr(istream& in, int& line);
-bool OrExpr(istream& in, int& line);
-bool AndExpr(istream& in, int& line);
-bool RelExpr(istream& in, int& line);
-bool AddExpr(istream& in, int& line);
-bool MultExpr(istream& in, int& line);
-bool UnaryExpr(istream& in, int& line);
-bool ExponExpr(istream& in, int& line, int sign);
-bool PrimaryExpr(istream& in, int& line, int sign);
-bool Var(istream& in, int& line);
+bool Expr(istream& in, int& line, Value& retVal);
+bool OrExpr(istream& in, int& line, Value& retVal);
+bool AndExpr(istream& in, int& line, Value& retVal);
+bool RelExpr(istream& in, int& line, Value& retVal);
+bool AddExpr(istream& in, int& line, Value& retVal);
+bool MultExpr(istream& in, int& line, Value& retVal);
+bool UnaryExpr(istream& in, int& line, Value& retVal);
+bool ExponExpr(istream& in, int& line, int sign, Value& retVal);
+bool PrimaryExpr(istream& in, int& line, int sign, Value& retVal);
+bool Var(istream& in, int& line, LexItem& idtok);
 
 // -----------------------------------------------------------------------------
 // Prog ::= StmtList
@@ -514,9 +507,9 @@ bool AssignStmt(istream& in, int& line) {
 // -----------------------------------------------------------------------------
 // Expr ::= OrExpr
 // -----------------------------------------------------------------------------
-bool Expr(istream& in, int& line) {
+bool Expr(istream& in, int& line, Value& retVal) {
   if (inExpErrorCascade) return false;
-  return OrExpr(in, line);
+  return OrExpr(in, line, retVal);
 }
 
 // -----------------------------------------------------------------------------
@@ -546,7 +539,7 @@ bool ExprList(istream& in, int& line) {
 // -----------------------------------------------------------------------------
 // OrExpr ::= AndExpr { || AndExpr }
 // -----------------------------------------------------------------------------
-bool OrExpr(istream& in, int& line) {
+bool OrExpr(istream& in, int& line, Value& retVal) {
   if (inExpErrorCascade) return false;
 
   if (!AndExpr(in, line)) return false;
